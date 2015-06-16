@@ -5,6 +5,7 @@ include(CheckCXXCompilerFlag)
 
 project(fibo)
 set(app_SOURCES
+        src/api.cc
         src/app.cc
         src/app_client.cc
         src/app_server.cc
