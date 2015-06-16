@@ -11,6 +11,12 @@ typedef uint8_t		request_t;
 typedef uint64_t	reply_t;
 typedef uint32_t	checksum_t;
 
+const version_t latest_version = 0;
+
+const error_t ERR_OK = 0;
+const error_t ERR_VERSION_MISMATCH = 1;
+const error_t ERR_INVALID_CHECKSUM = 2;
+
 template <typename T>
 uint32_t compute_checksum(T *r) {
 	boost::crc_32_type crc32;
