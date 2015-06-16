@@ -5,6 +5,12 @@
 
 namespace fibonacci_api {
 
+typedef uint8_t		version_t;
+typedef uint8_t		error_t;
+typedef uint8_t		request_t;
+typedef uint64_t	reply_t;
+typedef uint32_t	checksum_t;
+
 template <typename T>
 uint32_t compute_checksum(T *r) {
 	boost::crc_32_type crc32;
@@ -23,9 +29,9 @@ bool verify_checksum(T& r)
 
 struct request
 {
-	uint8_t		_version;
-	uint8_t 	_request;
-	uint32_t	_checksum;
+	version_t	_version;
+	request_t 	_request;
+	checksum_t	_checksum;
 	request ()
 	{}
 	request (uint8_t version, uint8_t request) :
@@ -39,10 +45,10 @@ struct request
 
 struct reply
 {
-	uint8_t		_version;
-	uint8_t		_error;
-	uint64_t	_reply;
-	uint32_t	_checksum;
+	version_t	_version;
+	error_t		_error;
+	reply_t		_reply;
+	checksum_t	_checksum;
 	reply ()
 	{}
 	reply (uint8_t version, error_t error) :
