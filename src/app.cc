@@ -13,6 +13,12 @@ usage(bool fatal)
 		exit(1);
 }
 
+void
+usage_fatal()
+{
+	usage(true);
+}
+
 int main(int argc, char* argv[])
 {
 	std::unique_ptr<app> app;
@@ -31,7 +37,7 @@ int main(int argc, char* argv[])
 		break;
 	}
 	default:
-		usage(true);
+		usage_fatal();
 		break;
 	}
 
