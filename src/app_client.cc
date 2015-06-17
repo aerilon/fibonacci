@@ -63,10 +63,8 @@ app_client::run()
 
 	boost::asio::connect(_sock, resolver.resolve({_host, _port}));
 
-	while (std::getline(std::cin, line)) {
-		if (!process_one_line(line))
-			break;
-	}
+	std::getline(std::cin, line);
+	process_one_line(line);
 
 	return 0;
 }
