@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 	try {
 		app->run();
 	} catch (std::exception& e) {
-		std::cerr << "Exception caught: " << e.what() << "\n";
+		std::cerr << e.what() << "\n";
 	}
 
 
