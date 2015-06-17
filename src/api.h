@@ -75,6 +75,12 @@ struct reply
 
 void dump(struct request &);
 
+static inline bool
+reply_is_valid(reply r)
+{
+	return (r._error == ERR_OK);
+}
+
 }
 
 #endif /* API_H */
