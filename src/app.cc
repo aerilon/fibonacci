@@ -1,5 +1,6 @@
 #include <iostream>
 #include <memory>
+#include <string>
 
 #include "app.h"
 #include "app_client.h"
@@ -26,13 +27,29 @@ int main(int argc, char* argv[])
 	switch (argc) {
 	case 2:
 	{
-		std::unique_ptr<app_server> _server(new app_server(1111));
+		int port;
+
+		try {
+			port = std::stoi(argv[1]);
+		} catch (std::exception& e) {
+			std::cerr << "Invalid argument: " << argv[1] <<
+				std::endl << std::endl;
+			usage_fatal();
+		}
+
+		if (port < 0 || port > UINT16_MAX) {
+			std::cerr << "Server port out-of-range: " << port <<
+				std::endl << std::endl;
+			usage_fatal();
+		}
+
+		std::unique_ptr<app_server> _server(new app_server(port));
 		app = std::move(_server);
 		break;
 	}
 	case 3:
 	{
-		std::unique_ptr<app_client> _client(new app_client("127.0.0.1", "1111"));
+		std::unique_ptr<app_client> _client(new app_client(argv[1], argv[2]));
 		app = std::move(_client);
 		break;
 	}
