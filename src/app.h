@@ -1,6 +1,8 @@
 #ifndef APP_H
 #define APP_H
 
+#include <stdexcept>
+
 #include <boost/asio.hpp>
 
 class app
