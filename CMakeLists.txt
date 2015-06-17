@@ -20,5 +20,7 @@ else()
 	message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
+set_property(TARGET app APPEND_STRING PROPERTY COMPILE_FLAGS "-g -O2 ")
+
 set_property(TARGET app APPEND_STRING PROPERTY LINK_FLAGS "-lboost_system ")
 set_property(TARGET app APPEND_STRING PROPERTY LINK_FLAGS "-lpthread ")
