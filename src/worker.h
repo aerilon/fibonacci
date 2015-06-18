@@ -8,8 +8,14 @@
 
 #include <boost/asio.hpp>
 
+#include "backend.h"
+
 class Worker {
 public:
+	Worker(std::shared_ptr<Backend> backend) :
+		_backend(backend)
+	{
+	}
 	void run();
 	void spawn();
 	void insertJob(boost::asio::ip::tcp::socket);
@@ -17,6 +23,8 @@ private:
 	bool hasJobs() { return !_queue.empty(); }
 	void waitForJobs();
 	void processJob(boost::asio::ip::tcp::socket);
+
+	std::shared_ptr<Backend>	_backend;
 
 	bool				_running;
 	std::thread			_thread;

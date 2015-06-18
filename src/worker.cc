@@ -90,10 +90,11 @@ Worker::processJob(tcp::socket sock)
 			std::runtime_error("Unable to write full reply");
 	}
 
+	uint64_t v = _backend->compute(request._request);
 
 	fibonacci_api::reply reply(
 	    fibonacci_api::latest_version,
-	    (uint64_t)42);
+	    v);
 
 	sock.write_some(boost::asio::buffer(&reply, sizeof reply), error);
 	if (error)

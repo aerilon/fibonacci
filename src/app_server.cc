@@ -4,6 +4,7 @@
 
 #include "api.h"
 #include "app_server.h"
+#include "backend.h"
 #include "worker.h"
 
 using boost::asio::ip::tcp;
@@ -13,6 +14,7 @@ using boost::asio::ip::tcp;
 int
 app_server::run()
 {
+	std::shared_ptr<Backend> b(new Backend);
 	std::vector<std::unique_ptr<Worker>> workers;
 	unsigned nthread = std::thread::hardware_concurrency();
 
@@ -20,7 +22,7 @@ app_server::run()
 		nthread = 1;
 
 	for (auto i = 0; i < nthread; i++)
-		workers.push_back(std::unique_ptr<Worker>(new Worker));
+		workers.push_back(std::unique_ptr<Worker>(new Worker(b)));
 
 	for (auto i = 0; i < nthread; i++)
 		(workers[i])->spawn();
