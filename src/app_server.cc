@@ -9,8 +9,6 @@
 
 using boost::asio::ip::tcp;
 
-
-
 int
 app_server::run()
 {
