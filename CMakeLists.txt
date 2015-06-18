@@ -9,6 +9,7 @@ set(app_SOURCES
         src/app.cc
         src/app_client.cc
         src/app_server.cc
+        src/worker.cc
 	)
 
 add_executable(app ${app_SOURCES})
