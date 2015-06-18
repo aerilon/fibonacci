@@ -19,11 +19,10 @@ app_server::run()
 	if (nthread == 0)
 		nthread = 1;
 
-	for (auto i = 0; i < nthread; i++)
+	for (auto i = 0; i < nthread; i++) {
 		workers.push_back(std::unique_ptr<Worker>(new Worker(b)));
-
-	for (auto i = 0; i < nthread; i++)
-		(workers[i])->spawn();
+		workers[i]->spawn();
+	}
 
 	tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), _port));
 	auto i = 0;
@@ -32,7 +31,7 @@ app_server::run()
 		tcp::socket sock(io_service);
 		acceptor.accept(sock);
 
-		(workers[i])->insertJob(std::move(sock));
+		workers[i]->insertJob(std::move(sock));
 
 		i = (i + 1) % nthread;
 	}
