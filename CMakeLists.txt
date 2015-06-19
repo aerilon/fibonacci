@@ -6,13 +6,13 @@ include(CheckCXXCompilerFlag)
 project(fibo)
 set(app_SOURCES
         src/api.cc
-        src/app.cc
-        src/app_client.cc
-        src/app_server.cc
-	src/backend.cc
+	src/App.cc
+	src/AppClient.cc
+	src/AppServer.cc
+	src/Backend.cc
 	src/JobGatherer.cc
 	src/JobScatterer.cc
-        src/worker.cc
+	src/Worker.cc
 	)
 
 add_executable(app ${app_SOURCES})

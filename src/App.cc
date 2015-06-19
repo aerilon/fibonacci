@@ -2,9 +2,9 @@
 #include <memory>
 #include <string>
 
-#include "app.h"
-#include "app_client.h"
-#include "app_server.h"
+#include "App.h"
+#include "AppClient.h"
+#include "AppServer.h"
 
 void
 usage(bool fatal)
@@ -22,7 +22,7 @@ usage_fatal()
 
 int main(int argc, char* argv[])
 {
-	std::unique_ptr<app> app;
+	std::unique_ptr<App> App;
 
 	switch (argc) {
 	case 2:
@@ -43,14 +43,14 @@ int main(int argc, char* argv[])
 			usage_fatal();
 		}
 
-		std::unique_ptr<app_server> _server(new app_server(port));
-		app = std::move(_server);
+		std::unique_ptr<AppServer> _server(new AppServer(port));
+		App = std::move(_server);
 		break;
 	}
 	case 3:
 	{
-		std::unique_ptr<app_client> _client(new app_client(argv[1], argv[2]));
-		app = std::move(_client);
+		std::unique_ptr<AppClient> _client(new AppClient(argv[1], argv[2]));
+		App = std::move(_client);
 		break;
 	}
 	default:
@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
 	}
 
 	try {
-		app->run();
+		App->run();
 	} catch (std::exception& e) {
 		std::cerr << e.what() << "\n";
 	}

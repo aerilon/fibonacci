@@ -3,17 +3,19 @@
 #include <boost/asio.hpp>
 
 #include "api.h"
-#include "app_server.h"
-#include "backend.h"
+#include "AppServer.h"
+#include "Backend.h"
 
 #include "JobScatterer.h"
 
-#include "worker.h"
+#include "Worker.h"
 
 using boost::asio::ip::tcp;
 
+#include <chrono>
+
 int
-app_server::run()
+AppServer::run()
 {
 	std::shared_ptr<Backend> backend(new Backend);
 

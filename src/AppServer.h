@@ -4,12 +4,12 @@
 #include <cstddef>
 #include <cstdint>
 
-#include "app.h"
+#include "App.h"
 
-class app_server : public app
+class AppServer : public App
 {
 public:
-	app_server(const uint16_t port) :
+	AppServer(const uint16_t port) :
 	    _port(port)
 	{
 	}

@@ -3,7 +3,7 @@
 
 #include <boost/asio.hpp>
 
-#include "backend.h"
+#include "Backend.h"
 
 #include "GenericWorkQueue.h"
 

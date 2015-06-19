@@ -1,7 +1,7 @@
 #include <stdexcept>
 
 #include "api.h"
-#include "worker.h"
+#include "Worker.h"
 #include "JobGatherer.h"
 
 using boost::asio::ip::tcp;

@@ -4,12 +4,12 @@
 #include <cstddef>
 #include <cstdint>
 
-#include "app.h"
+#include "App.h"
 
-class app_client : public app
+class AppClient : public App
 {
 public:
-	app_client(const char *host, const char *port) :
+	AppClient(const char *host, const char *port) :
 	    _host(host),
 	    _port(port),
 	    _sock(io_service)

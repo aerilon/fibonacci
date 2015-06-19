@@ -5,10 +5,10 @@
 
 #include <boost/asio.hpp>
 
-class app
+class App
 {
 public:
-	app()
+	App()
 	{
 	}
 

@@ -1,12 +1,12 @@
 #include <iostream>
 
 #include "api.h"
-#include "app_client.h"
+#include "AppClient.h"
 
 using boost::asio::ip::tcp;
 
 bool
-app_client::process_one_line(std::string line)
+AppClient::process_one_line(std::string line)
 {
 	int v;
 
@@ -55,7 +55,7 @@ app_client::process_one_line(std::string line)
 }
 
 int
-app_client::run()
+AppClient::run()
 {
 	std::string line;
 

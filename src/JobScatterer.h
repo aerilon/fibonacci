@@ -6,7 +6,7 @@
 #include "GenericWorkQueue.h"
 #include "Job.h"
 #include "JobGatherer.h"
-#include "worker.h"
+#include "Worker.h"
 
 class JobScatterer : public GenericWorkQueue<boost::asio::ip::tcp::socket>
 {
