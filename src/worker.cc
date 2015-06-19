@@ -6,55 +6,7 @@
 using boost::asio::ip::tcp;
 
 void
-Worker::run()
-{
-
-	for (;;) {
-		waitForJobs();
-		tcp::socket sock = std::move(_queue.front());
-		_queue.pop();
-
-		try {
-			processJob(std::move(sock));
-		} catch (std::exception& e)
-		{
-			std::cerr << e.what() << std::endl;
-		}
-	}
-}
-
-void
-Worker::spawn()
-{
-	_running = true;
-	_thread = std::thread(&Worker::run, this);
-	_thread.detach();
-}
-
-void
-Worker::insertJob(tcp::socket sock)
-{
-	bool notify = !hasJobs();
-
-	_queue.push(std::move(sock));
-
-	_queueEmptyCond.notify_all();
-}
-
-void
-Worker::waitForJobs()
-{
-
-	if (hasJobs())
-		return;
-
-	std::unique_lock<std::mutex> lk(_queueEmptyLock);
-	while (!hasJobs())
-		_queueEmptyCond.wait(lk);
-}
-
-void
-Worker::processJob(tcp::socket sock)
+Worker::processJob(boost::asio::ip::tcp::socket sock)
 {
 	boost::system::error_code error;
 	size_t length;
