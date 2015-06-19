@@ -55,4 +55,3 @@ JobScatterer::processJob(tcp::socket sock)
 
 	_last_worker = (_last_worker + 1) % _workers.size();
 }
-

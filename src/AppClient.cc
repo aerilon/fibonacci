@@ -68,5 +68,3 @@ AppClient::run()
 
 	return 0;
 }
-
-

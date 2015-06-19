@@ -14,4 +14,3 @@ dump(struct request &r)
 }
 
 } /* fibonacci_api */
-
