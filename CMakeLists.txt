@@ -10,6 +10,8 @@ set(app_SOURCES
         src/app_client.cc
         src/app_server.cc
 	src/backend.cc
+	src/JobGatherer.cc
+	src/JobScatterer.cc
         src/worker.cc
 	)
 

@@ -5,6 +5,9 @@
 #include "api.h"
 #include "app_server.h"
 #include "backend.h"
+
+#include "JobScatterer.h"
+
 #include "worker.h"
 
 using boost::asio::ip::tcp;
@@ -12,28 +15,18 @@ using boost::asio::ip::tcp;
 int
 app_server::run()
 {
-	std::shared_ptr<Backend> b(new Backend);
-	std::vector<std::unique_ptr<Worker>> workers;
-	unsigned nthread = std::thread::hardware_concurrency();
+	std::shared_ptr<Backend> backend(new Backend);
 
-	if (nthread == 0)
-		nthread = 1;
+	JobScatterer scatterer(backend);
 
-	for (auto i = 0; i < nthread; i++) {
-		workers.push_back(std::unique_ptr<Worker>(new Worker(b)));
-		workers[i]->spawn();
-	}
+	scatterer.bootstrap();
 
 	tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), _port));
-	auto i = 0;
-
 	for (;;) {
 		tcp::socket sock(io_service);
 		acceptor.accept(sock);
 
-		workers[i]->insertJob(std::move(sock));
-
-		i = (i + 1) % nthread;
+		scatterer.insertJob(std::move(sock));
 	}
 
 	return 0;

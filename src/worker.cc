@@ -2,53 +2,14 @@
 
 #include "api.h"
 #include "worker.h"
+#include "JobGatherer.h"
 
 using boost::asio::ip::tcp;
 
 void
-Worker::processJob(boost::asio::ip::tcp::socket sock)
+Worker::processJob(struct Job job)
 {
-	boost::system::error_code error;
-	size_t length;
+	job._reply = _backend->compute(job._request);
 
-	fibonacci_api::request request;
-
-	length = sock.read_some(boost::asio::buffer(&request, sizeof request), error);
-	if (error)
-		throw boost::system::system_error(error);
-
-	if (length != sizeof request)
-		std::runtime_error("Unable to read full request");
-
-#ifdef notyet
-	// Don't expect to read any more data, shut down
-	// receiving side
-	sock.shutdown(boost::asio::ip::tcp::socket::shutdown_receive, error);
-	if (error)
-		throw boost::system::system_error(error);
-#endif
-
-	/* Gracefully handle invalid checksum */
-	if (!fibonacci_api::verify_checksum(request)) {
-		fibonacci_api::reply reply(
-		    fibonacci_api::latest_version,
-		    fibonacci_api::ERR_INVALID_CHECKSUM);
-
-		length = sock.write_some(boost::asio::buffer(&reply, sizeof reply), error);
-		if (error)
-			throw boost::system::system_error(error);
-
-		if (length != sizeof reply)
-			std::runtime_error("Unable to write full reply");
-	}
-
-	uint64_t v = _backend->compute(request._request);
-
-	fibonacci_api::reply reply(
-	    fibonacci_api::latest_version,
-	    v);
-
-	sock.write_some(boost::asio::buffer(&reply, sizeof reply), error);
-	if (error)
-		throw boost::system::system_error(error);
+	_gatherer->insertJob(std::move(job));
 }
