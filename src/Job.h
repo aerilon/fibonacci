@@ -5,14 +5,14 @@
 
 struct Job
 {
-	Job(boost::asio::ip::tcp::socket sock, uint8_t request) :
-		_sock(std::move(sock)),
-		_request(request)
+	Job(boost::asio::ip::tcp::socket sock, uint8_t query) :
+		sock(std::move(sock)),
+		query(query)
 	{
 	}
-	boost::asio::ip::tcp::socket _sock;
-	uint8_t		_request;
-	uint64_t	_reply;
+	boost::asio::ip::tcp::socket sock;
+	uint8_t		query;
+	uint64_t	reply;
 };
 
 #endif // JOB_H

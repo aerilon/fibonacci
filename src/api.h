@@ -7,7 +7,7 @@ namespace fibonacci_api {
 
 typedef uint8_t		version_t;
 typedef uint8_t		error_t;
-typedef uint8_t		request_t;
+typedef uint8_t		query_t;
 typedef uint64_t	reply_t;
 typedef uint32_t	checksum_t;
 
@@ -21,7 +21,7 @@ template <typename T>
 uint32_t compute_checksum(T *r) {
 	boost::crc_32_type crc32;
 
-	crc32.process_bytes(r, sizeof (*r) - sizeof (r->_checksum));
+	crc32.process_bytes(r, sizeof (*r) - sizeof (r->checksum));
 
 	return crc32.checksum();
 };
@@ -30,55 +30,55 @@ template <typename T>
 bool verify_checksum(T& r)
 {
 
-	return r._checksum == compute_checksum(&r);
+	return r.checksum == compute_checksum(&r);
 };
 
-struct request
+struct query
 {
-	version_t	_version;
-	request_t 	_request;
-	checksum_t	_checksum;
-	request ()
+	version_t	version;
+	query_t 	value;
+	checksum_t	checksum;
+	query ()
 	{}
-	request (uint8_t version, uint8_t request) :
-	    _version(version),
-	    _request(request)
+	query (uint8_t version, uint8_t value) :
+	    version(version),
+	    value(value)
 	{
 
-		_checksum = compute_checksum(this);
+		checksum = compute_checksum(this);
 	};
 } __attribute__ ((packed));
 
 struct reply
 {
-	version_t	_version;
-	error_t		_error;
-	reply_t		_reply;
-	checksum_t	_checksum;
+	version_t	version;
+	error_t		error;
+	reply_t		value;
+	checksum_t	checksum;
 	reply ()
 	{}
 	reply (uint8_t version, error_t error) :
-	    _version(version),
-	    _error(error),
-	    _reply(0)
+	    version(version),
+	    error(error),
+	    value(0)
 	{
-		_checksum = compute_checksum(this);
+		checksum = compute_checksum(this);
 	}
-	reply (uint8_t version, uint64_t reply) :
-	    _version(version),
-	    _error(ERR_OK),
-	    _reply(reply)
+	reply (uint8_t version, uint64_t value) :
+	    version(version),
+	    error(ERR_OK),
+	    value(value)
 	{
-		_checksum = compute_checksum(this);
+		checksum = compute_checksum(this);
 	};
 } __attribute__ ((packed));
 
-void dump(struct request &);
+void dump(struct query &);
 
 static inline bool
 reply_is_valid(reply r)
 {
-	return (r._error == ERR_OK);
+	return (r.error == ERR_OK);
 }
 
 }

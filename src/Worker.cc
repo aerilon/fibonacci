@@ -9,7 +9,7 @@ using boost::asio::ip::tcp;
 void
 Worker::processJob(struct Job job)
 {
-	job._reply = _backend->compute(job._request);
+	job.reply = _backend->compute(job.query);
 
 	_gatherer->insertJob(std::move(job));
 }

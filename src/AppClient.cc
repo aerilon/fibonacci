@@ -22,17 +22,17 @@ AppClient::process_one_line(std::string line)
 	if (v < 0 || v > UINT8_MAX)
 		return false;
 
-	fibonacci_api::request request(0, v);
+	fibonacci_api::query query(0, v);
 
 	boost::system::error_code error;
 	size_t length;
 
-	length = _sock.write_some(boost::asio::buffer(&request, sizeof request), error);
+	length = _sock.write_some(boost::asio::buffer(&query, sizeof query), error);
 	if (error)
 		throw boost::system::system_error(error);
 
-	if (length != sizeof request)
-		throw std::runtime_error("Unable to send full request");
+	if (length != sizeof query)
+		throw std::runtime_error("Unable to send full query");
 
 	fibonacci_api::reply reply;
 
@@ -49,7 +49,7 @@ AppClient::process_one_line(std::string line)
 	if (!fibonacci_api::reply_is_valid(reply))
 		throw std::runtime_error("Computation failed");
 
-	std::cout << reply._reply << std::endl;
+	std::cout << reply.value << std::endl;
 
 	return true;
 }

@@ -6,11 +6,11 @@ namespace fibonacci_api
 {
 
 void
-dump(struct request &r)
+dump(struct query &r)
 {
-	std::cout << unsigned(r._version) << std::endl;
-	std::cout << unsigned(r._request) << std::endl;
-	std::cout << std::hex << unsigned(r._checksum) << std::endl;
+	std::cout << unsigned(r.version) << std::endl;
+	std::cout << unsigned(r.value) << std::endl;
+	std::cout << std::hex << unsigned(r.checksum) << std::endl;
 }
 
 } /* fibonacci_api */

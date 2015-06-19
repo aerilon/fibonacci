@@ -11,9 +11,9 @@ JobGatherer::processJob(struct Job job)
 
 	fibonacci_api::reply reply(
 	    fibonacci_api::latest_version,
-	    job._reply);
+	    job.reply);
 
-	tcp::socket sock = std::move(job._sock);
+	tcp::socket sock = std::move(job.sock);
 
 	sock.write_some(boost::asio::buffer(&reply, sizeof reply), error);
 	if (error)

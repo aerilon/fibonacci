@@ -24,18 +24,18 @@ JobScatterer::processJob(tcp::socket sock)
 	boost::system::error_code error;
 	size_t length;
 
-	fibonacci_api::request request;
+	fibonacci_api::query query;
 
-	length = sock.read_some(boost::asio::buffer(&request, sizeof request), error);
+	length = sock.read_some(boost::asio::buffer(&query, sizeof query), error);
 	if (error)
 		throw boost::system::system_error(error);
 
-	if (length != sizeof request)
-		std::runtime_error("Unable to read full request");
+	if (length != sizeof query)
+		std::runtime_error("Unable to read full query");
 
 #if notyet
 	/* Gracefully handle invalid checksum */
-	if (!fibonacci_api::verify_checksum(request)) {
+	if (!fibonacci_api::verify_checksum(query)) {
 		fibonacci_api::reply reply(
 		    fibonacci_api::latest_version,
 		    fibonacci_api::ERR_INVALID_CHECKSUM);
@@ -49,7 +49,7 @@ JobScatterer::processJob(tcp::socket sock)
 	}
 #endif
 
-	Job job(std::move(sock), request._request);
+	Job job(std::move(sock), query.value);
 
 	_workers[_last_worker]->insertJob(std::move(job));
 
