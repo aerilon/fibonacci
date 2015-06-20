@@ -59,7 +59,7 @@ AppClient::run()
 {
 	std::string line;
 
-	tcp::resolver resolver(io_service);
+	tcp::resolver resolver(_io_service);
 
 	boost::asio::connect(_sock, resolver.resolve({_host, _port}));
 

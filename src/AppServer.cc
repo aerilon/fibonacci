@@ -23,9 +23,9 @@ AppServer::run()
 
 	scatterer.bootstrap();
 
-	tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), _port));
+	tcp::acceptor acceptor(_io_service, tcp::endpoint(tcp::v4(), _port));
 	for (;;) {
-		tcp::socket sock(io_service);
+		tcp::socket sock(_io_service);
 		acceptor.accept(sock);
 
 		scatterer.insertJob(std::move(sock));

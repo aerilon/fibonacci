@@ -12,7 +12,7 @@ public:
 	AppClient(const char *host, const char *port) :
 	    _host(host),
 	    _port(port),
-	    _sock(io_service)
+	    _sock(_io_service)
 	{
 	}
 

@@ -15,7 +15,7 @@ public:
 	virtual int run() = 0;
 
 protected:
-	boost::asio::io_service io_service;
+	boost::asio::io_service _io_service;
 };
 
 #endif // APP_H
