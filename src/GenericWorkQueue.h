@@ -22,6 +22,7 @@ private:
 	std::thread			_thread;
 	std::mutex			_queueEmptyLock;
 	std::condition_variable		_queueEmptyCond;
+	std::mutex			_queueLock;
 	std::queue<T>			_queue;
 };
 
@@ -60,7 +61,10 @@ GenericWorkQueue<T>::insertJob(T t)
 {
 	bool notify = !hasJobs();
 
-	_queue.push(std::move(t));
+	{
+		std::lock_guard<std::mutex> lock(_queueLock);
+		_queue.push(std::move(t));
+	}
 
 	_queueEmptyCond.notify_all();
 }
