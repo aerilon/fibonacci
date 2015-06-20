@@ -47,6 +47,19 @@ JobScatterer::processJob(tcp::socket sock)
 		if (length != sizeof reply)
 			std::runtime_error("Unable to write full reply");
 	}
+
+	if (query.value > _backend->upper_limit) {
+		fibonacci_api::reply reply(
+		    fibonacci_api::latest_version,
+		    fibonacci_api::ERR_OUT_OF_RANGE);
+
+		length = sock.write_some(boost::asio::buffer(&reply, sizeof reply), error);
+		if (error)
+			throw boost::system::system_error(error);
+
+		if (length != sizeof reply)
+			std::runtime_error("Unable to write full reply");
+	}
 #endif
 
 	Job job(std::move(sock), query.value);

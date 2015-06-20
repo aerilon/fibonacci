@@ -17,6 +17,9 @@ public:
 	        _m(1, 1) = 0;
 	}
 	uint64_t compute(uint8_t);
+
+	// Inclusive implementation upper-limit
+	const uint16_t upper_limit = 93;
 private:
 	boost::numeric::ublas::matrix<uint64_t> _m;
 };

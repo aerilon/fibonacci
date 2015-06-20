@@ -16,6 +16,7 @@ const version_t latest_version = 0;
 const error_t ERR_OK = 0;
 const error_t ERR_VERSION_MISMATCH = 1;
 const error_t ERR_INVALID_CHECKSUM = 2;
+const error_t ERR_OUT_OF_RANGE = 3;
 
 template <typename T>
 uint32_t compute_checksum(T *r) {
