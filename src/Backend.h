@@ -9,6 +9,8 @@
 #include <boost/multiprecision/cpp_int.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 
+#include "api.h"
+
 class Backend
 {
 public:
@@ -20,15 +22,15 @@ public:
 	        _m(1, 0) = 1;
 	        _m(1, 1) = 0;
 	}
-	uint64_t compute(uint8_t);
+	fibonacci_api::reply_t compute(fibonacci_api::query_t);
 
 	// Inclusive implementation upper-limit
-	const uint16_t upper_limit = 93;
+	const unsigned int upper_limit = 93;
 private:
-	boost::multiprecision::uint1024_t compute_slow(uint8_t);
+	boost::multiprecision::uint1024_t compute_slow(fibonacci_api::query_t);
 
 	std::mutex	_mapLock;
-	std::map<unsigned int, boost::multiprecision::uint1024_t>	_map;
+	std::map<fibonacci_api::query_t, boost::multiprecision::uint1024_t>	_map;
 	boost::numeric::ublas::matrix<boost::multiprecision::uint1024_t> _m;
 };
 

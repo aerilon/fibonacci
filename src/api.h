@@ -58,14 +58,14 @@ struct reply
 	checksum_t	checksum;
 	reply ()
 	{}
-	reply (uint8_t version, error_t error) :
+	reply (version_t version, error_t error) :
 	    version(version),
 	    error(error),
 	    value(0)
 	{
 		checksum = compute_checksum(this);
 	}
-	reply (uint8_t version, uint64_t value) :
+	reply (version_t version, reply_t value) :
 	    version(version),
 	    error(ERR_OK),
 	    value(value)

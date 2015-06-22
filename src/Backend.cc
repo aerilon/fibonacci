@@ -2,8 +2,8 @@
 
 #include "Backend.h"
 
-uint64_t
-Backend::compute(uint8_t n)
+fibonacci_api::reply_t
+Backend::compute(fibonacci_api::query_t n)
 {
 	boost::multiprecision::uint1024_t v;
 
@@ -12,7 +12,7 @@ Backend::compute(uint8_t n)
 
 		auto it = _map.find(n);
 		if (it != _map.end())
-			return static_cast<uint64_t>(it->second);
+			return static_cast<fibonacci_api::reply_t>(it->second);
 	}
 
 	v = compute_slow(n);
@@ -22,11 +22,11 @@ Backend::compute(uint8_t n)
 		_map[n] = v;
 	}
 
-	return static_cast<uint64_t>(v);
+	return static_cast<fibonacci_api::reply_t>(v);
 }
 
 boost::multiprecision::uint1024_t
-Backend::compute_slow(uint8_t n)
+Backend::compute_slow(fibonacci_api::query_t n)
 {
 	boost::numeric::ublas::matrix<boost::multiprecision::uint1024_t> p = _m;
 
