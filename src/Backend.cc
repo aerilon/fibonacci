@@ -7,6 +7,9 @@ Backend::compute(fibonacci_api::query_t n)
 {
 	boost::multiprecision::uint1024_t v;
 
+	if (n > upper_limit)
+		throw std::runtime_error("Value out of bound");
+
 	{
 		std::lock_guard<std::mutex> lk(_mapLock);
 
