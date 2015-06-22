@@ -10,6 +10,10 @@
 template <typename T>
 class GenericWorkQueue {
 public:
+	GenericWorkQueue() :
+		_njobs(0)
+	{
+	}
 	void run();
 	void spawn();
 	void insertJob(T);
@@ -24,6 +28,8 @@ private:
 	std::condition_variable		_queueEmptyCond;
 	std::mutex			_queueLock;
 	std::queue<T>			_queue;
+
+	uint64_t			_njobs;
 };
 
 template <typename T>
@@ -37,6 +43,7 @@ GenericWorkQueue<T>::run()
 		_queue.pop();
 
 		try {
+			_njobs++;
 			processJob(std::move(t));
 		} catch (std::exception& e)
 		{
