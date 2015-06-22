@@ -34,6 +34,12 @@ bool verify_checksum(T& r)
 	return r.checksum == compute_checksum(&r);
 };
 
+/*
+ * FIXME -
+ * The reply's value, as well as the reply's and query's checksum are
+ * multi-byte value whose encoding depends on the host endianness. As-is,
+ * communication between host of different endianness is broken.
+ */
 struct query
 {
 	version_t	version;
