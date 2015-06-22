@@ -18,7 +18,7 @@ public:
 
 	int run();
 private:
-	bool process_one_line(std::string);
+	bool processOneLine(std::string);
 
 	const char *_host;
 	const char *_port;

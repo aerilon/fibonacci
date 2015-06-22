@@ -6,7 +6,7 @@
 using boost::asio::ip::tcp;
 
 bool
-AppClient::process_one_line(std::string line)
+AppClient::processOneLine(std::string line)
 {
 	int v;
 
@@ -64,7 +64,7 @@ AppClient::run()
 	boost::asio::connect(_sock, resolver.resolve({_host, _port}));
 
 	while (std::getline(std::cin, line)) {
-		if (!process_one_line(line))
+		if (!processOneLine(line))
 			break;
 	}
 
