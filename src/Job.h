@@ -3,14 +3,17 @@
 
 #include <boost/asio.hpp>
 
+#include "api.h"
+
 struct Job
 {
-	Job(boost::asio::ip::tcp::socket sock, uint8_t query) :
+	Job(boost::asio::ip::tcp::socket sock) :
 		sock(std::move(sock)),
-		query(query)
+		error(fibonacci_api::ERR_OK)
 	{
 	}
 	boost::asio::ip::tcp::socket sock;
+	fibonacci_api::error_t	error;
 	uint8_t		query;
 	uint64_t	reply;
 };

@@ -33,36 +33,23 @@ JobScatterer::processJob(tcp::socket sock)
 	if (length != sizeof query)
 		std::runtime_error("Unable to read full query");
 
-#if notyet
+	Job job(std::move(sock));
+
 	/* Gracefully handle invalid checksum */
 	if (!fibonacci_api::verify_checksum(query)) {
-		fibonacci_api::reply reply(
-		    fibonacci_api::latest_version,
-		    fibonacci_api::ERR_INVALID_CHECKSUM);
-
-		length = sock.write_some(boost::asio::buffer(&reply, sizeof reply), error);
-		if (error)
-			throw boost::system::system_error(error);
-
-		if (length != sizeof reply)
-			std::runtime_error("Unable to write full reply");
+		job.error = fibonacci_api::ERR_INVALID_CHECKSUM;
+		_gatherer.insertJob(std::move(job));
+		return;
 	}
 
+	/* Check for query's upper limit bound */
 	if (query.value > _backend->upper_limit) {
-		fibonacci_api::reply reply(
-		    fibonacci_api::latest_version,
-		    fibonacci_api::ERR_OUT_OF_RANGE);
-
-		length = sock.write_some(boost::asio::buffer(&reply, sizeof reply), error);
-		if (error)
-			throw boost::system::system_error(error);
-
-		if (length != sizeof reply)
-			std::runtime_error("Unable to write full reply");
+		job.error = fibonacci_api::ERR_OUT_OF_RANGE;
+		_gatherer.insertJob(std::move(job));
+		return;
 	}
-#endif
 
-	Job job(std::move(sock), query.value);
+	job.query = query.value;
 
 	_workers[_last_worker]->insertJob(std::move(job));
 

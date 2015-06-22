@@ -16,6 +16,7 @@ public:
 
 private:
 	void processJob(struct Job);
+	void postReply(boost::asio::ip::tcp::socket, fibonacci_api::reply);
 	JobScatterer *_scatterer;
 };
 
