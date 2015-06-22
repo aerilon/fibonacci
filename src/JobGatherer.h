@@ -10,6 +10,7 @@ class JobGatherer : public GenericWorkQueue<struct Job>
 {
 public:
 	JobGatherer(JobScatterer *scatterer) :
+		GenericWorkQueue<struct Job>("JobGatherer"),
 		_scatterer(scatterer)
 	{
 	}

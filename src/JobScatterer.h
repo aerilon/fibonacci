@@ -12,6 +12,7 @@ class JobScatterer : public GenericWorkQueue<boost::asio::ip::tcp::socket>
 {
 public:
 	JobScatterer(std::shared_ptr<Backend> backend) :
+		GenericWorkQueue<boost::asio::ip::tcp::socket>("JobScatterer"),
 		_backend(backend),
 		_gatherer(this),
 		_last_worker(0)

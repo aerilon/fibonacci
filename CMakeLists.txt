@@ -1,7 +1,15 @@
 # CMakeLists.txt in src
 cmake_minimum_required(VERSION 3.0)
 
+include(CheckIncludeFiles)
+
 include(CheckCXXCompilerFlag)
+
+ENABLE_LANGUAGE(C)
+
+CHECK_INCLUDE_FILES (pthread.h HAVE_PTHREAD_H)
+
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/src/config.h)
 
 project(fibo)
 set(fibonacci_SOURCES

@@ -1,17 +1,24 @@
 #ifndef GENERIC_WORK_QUEUE_H
 #define GENERIC_WORK_QUEUE_H
 
+#include "config.h"
+
 #include <condition_variable>
 #include <iostream>
 #include <mutex>
 #include <queue>
 #include <thread>
 
+#ifdef HAVE_PTHREAD_H
+#include <pthread.h>
+#endif
+
 template <typename T>
 class GenericWorkQueue {
 public:
-	GenericWorkQueue() :
-		_njobs(0)
+	GenericWorkQueue(std::string thread_name) :
+		_njobs(0),
+		_thread_name(thread_name)
 	{
 	}
 	void run();
@@ -30,12 +37,19 @@ private:
 	std::queue<T>			_queue;
 
 	uint64_t			_njobs;
+
+	std::string			_thread_name;
 };
 
 template <typename T>
 void
 GenericWorkQueue<T>::run()
 {
+
+#ifdef HAVE_PTHREAD_H
+	if (_thread_name.length() != 0)
+		pthread_setname_np(pthread_self(), _thread_name.c_str());
+#endif
 
 	for (;;) {
 		waitForJobs();

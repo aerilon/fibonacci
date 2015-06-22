@@ -18,6 +18,7 @@ class Worker : public GenericWorkQueue<struct Job>
 {
 public:
 	Worker(std::shared_ptr<Backend> backend, JobGatherer *gatherer) :
+		GenericWorkQueue<struct Job>("Worker"),
 		_backend(backend),
 		_gatherer(gatherer)
 	{
