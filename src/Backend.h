@@ -3,6 +3,9 @@
 
 #include <cstdint>
 
+#include <map>
+#include <mutex>
+
 #include <boost/multiprecision/cpp_int.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 
@@ -22,6 +25,10 @@ public:
 	// Inclusive implementation upper-limit
 	const uint16_t upper_limit = 93;
 private:
+	boost::multiprecision::uint1024_t compute_slow(uint8_t);
+
+	std::mutex	_mapLock;
+	std::map<unsigned int, boost::multiprecision::uint1024_t>	_map;
 	boost::numeric::ublas::matrix<boost::multiprecision::uint1024_t> _m;
 };
 
