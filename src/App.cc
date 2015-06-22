@@ -6,10 +6,18 @@
 #include "AppClient.h"
 #include "AppServer.h"
 
+static const char *progname;
+
 void
 usage(bool fatal)
 {
-	std::cerr << "Usage: echo [host] <port>\n";
+	std::cerr << "Usage: " << std::endl;
+	std::cerr << "Server mode: " << progname << " <port>" << std::endl;
+	std::cerr << "Client mode: " << progname << " <host> <port>" << std::endl;
+	std::cerr << std::endl;
+	std::cerr << "<host>\tHost to connect to" << std::endl;
+	std::cerr << "<port>\tIn client mode, port to connect to." << std::endl;
+	std::cerr << "\tIn server mode, port to listen on." << std::endl;
 	if (fatal)
 		exit(1);
 }
@@ -23,6 +31,8 @@ usage_fatal()
 int main(int argc, char* argv[])
 {
 	std::unique_ptr<App> App;
+
+	progname = argv[0];
 
 	switch (argc) {
 	case 2:
