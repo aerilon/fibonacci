@@ -27,6 +27,9 @@ JobScatterer::processJob(tcp::socket sock)
 	fibonacci_api::query query;
 
 	length = sock.read_some(boost::asio::buffer(&query, sizeof query), error);
+	if (error == boost::asio::error::eof)
+		return;
+
 	if (error)
 		throw boost::system::system_error(error);
 
