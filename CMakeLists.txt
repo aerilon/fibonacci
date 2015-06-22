@@ -28,3 +28,23 @@ set_property(TARGET fibonacci APPEND_STRING PROPERTY COMPILE_FLAGS "-g -O2 ")
 
 set_property(TARGET fibonacci APPEND_STRING PROPERTY LINK_FLAGS "-lboost_system ")
 set_property(TARGET fibonacci APPEND_STRING PROPERTY LINK_FLAGS "-lpthread ")
+
+set (test_api_SOURCES
+	src/api.cc
+	tests/test-api.cc)
+
+add_executable(test-api ${test_api_SOURCES})
+
+set_property(TARGET test-api APPEND_STRING PROPERTY COMPILE_FLAGS "-std=c++11 ")
+set_property(TARGET test-api APPEND_STRING PROPERTY COMPILE_FLAGS "-Isrc ")
+set_property(TARGET test-api APPEND_STRING PROPERTY LINK_FLAGS "-lboost_unit_test_framework")
+
+set (test_backend_SOURCES
+	src/Backend.cc
+	tests/test-backend.cc)
+
+add_executable(test-backend ${test_backend_SOURCES})
+
+set_property(TARGET test-backend APPEND_STRING PROPERTY COMPILE_FLAGS "-std=c++11 ")
+set_property(TARGET test-backend APPEND_STRING PROPERTY COMPILE_FLAGS "-Isrc ")
+set_property(TARGET test-backend APPEND_STRING PROPERTY LINK_FLAGS "-lboost_unit_test_framework")
