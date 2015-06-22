@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
 	try {
 		App->run();
 	} catch (std::exception& e) {
-		std::cerr << e.what() << "\n";
+		std::cerr << e.what() << std::endl;
 	}
 
 
