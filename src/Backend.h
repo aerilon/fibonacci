@@ -34,4 +34,4 @@ private:
 	boost::numeric::ublas::matrix<boost::multiprecision::uint1024_t> _m;
 };
 
-#endif /* BACKEND_H */
+#endif // BACKEND_H

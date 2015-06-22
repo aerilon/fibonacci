@@ -13,4 +13,4 @@ dump(struct query &r)
 	std::cout << std::hex << unsigned(r.checksum) << std::endl;
 }
 
-} /* fibonacci_api */
+} // fibonacci_api

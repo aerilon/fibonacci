@@ -29,4 +29,4 @@ private:
 	JobGatherer *			_gatherer;
 };
 
-#endif /* WORKER_H */
+#endif // WORKER_H

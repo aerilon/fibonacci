@@ -84,4 +84,4 @@ reply_is_valid(reply r)
 
 }
 
-#endif /* API_H */
+#endif // API_H
