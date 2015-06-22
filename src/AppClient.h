@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 
+#include "api.h"
 #include "App.h"
 
 class AppClient : public App
@@ -19,6 +20,10 @@ public:
 	int run();
 private:
 	bool processOneLine(std::string);
+
+	void			sendQuery(uint8_t);
+	fibonacci_api::reply	receiveReply();
+	void			processReply(fibonacci_api::reply);
 
 	const char *_host;
 	const char *_port;
