@@ -3,6 +3,7 @@
 
 #include <cstdint>
 
+#include <boost/multiprecision/cpp_int.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 
 class Backend
@@ -21,7 +22,7 @@ public:
 	// Inclusive implementation upper-limit
 	const uint16_t upper_limit = 93;
 private:
-	boost::numeric::ublas::matrix<uint64_t> _m;
+	boost::numeric::ublas::matrix<boost::multiprecision::uint1024_t> _m;
 };
 
 #endif /* BACKEND_H */
