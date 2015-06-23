@@ -103,8 +103,7 @@ GenericWorkQueue<T>::waitForJobs()
 
 	std::unique_lock<std::mutex> lk(_queueLock);
 
-	while (!hasJobs())
-		_queueEmptyCond.wait(lk);
+	_queueEmptyCond.wait(lk, [&] { return hasJobs(); });
 }
 
 #endif // GENERIC_WORK_QUEUE_H
