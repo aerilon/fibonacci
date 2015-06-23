@@ -80,7 +80,6 @@ template <typename T>
 void
 GenericWorkQueue<T>::insertJob(T t)
 {
-	bool notify = !hasJobs();
 
 	{
 		std::lock_guard<std::mutex> lock(_queueLock);
