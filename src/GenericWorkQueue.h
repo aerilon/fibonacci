@@ -31,7 +31,6 @@ private:
 
 	bool				_running;
 	std::thread			_thread;
-	std::mutex			_queueEmptyLock;
 	std::condition_variable		_queueEmptyCond;
 	std::mutex			_queueLock;
 	std::queue<T>			_queue;
@@ -53,8 +52,13 @@ GenericWorkQueue<T>::run()
 
 	for (;;) {
 		waitForJobs();
+
 		T t = std::move(_queue.front());
-		_queue.pop();
+
+		{
+			std::lock_guard<std::mutex> lock(_queueLock);
+			_queue.pop();
+		}
 
 		try {
 			_njobs++;
@@ -97,7 +101,8 @@ GenericWorkQueue<T>::waitForJobs()
 	if (hasJobs())
 		return;
 
-	std::unique_lock<std::mutex> lk(_queueEmptyLock);
+	std::unique_lock<std::mutex> lk(_queueLock);
+
 	while (!hasJobs())
 		_queueEmptyCond.wait(lk);
 }
